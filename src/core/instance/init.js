@@ -28,7 +28,7 @@ export function initMixin (Vue: Class<Component>) {
     }
 
     // a flag to avoid this being observed
-    // 如果是 Vue 实例不需要被observe
+    // 如果是 Vue 实例不需要被observe，后面observe逻辑判断需要用到该参数
     vm._isVue = true
     // merge options
     if (options && options._isComponent) {
@@ -37,6 +37,7 @@ export function initMixin (Vue: Class<Component>) {
       // internal component options needs special treatment.
       initInternalComponent(vm, options)
     } else {
+      // 将Vue的options和用户传入的options合并
       vm.$options = mergeOptions(
         resolveConstructorOptions(vm.constructor),
         options || {},
@@ -56,7 +57,7 @@ export function initMixin (Vue: Class<Component>) {
     initLifecycle(vm)
     // vm 的事件监听初始化，父组件绑定在当前组件的事件
     initEvents(vm)
-    // vm 的遍历render初始化
+    // vm 的遍历render初始化 路径：./render.js
     // $slots/$scopedSlots/_c/$createElement/$attrs/$listeners
     initRender(vm)
     // beforeCreate 生命钩子的回调

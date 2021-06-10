@@ -61,6 +61,7 @@ export function renderMixin (Vue: Class<Component>) {
 
   Vue.prototype._render = function (): VNode {
     const vm: Component = this
+    // vm.$options在core/instance/init.js中定义，实际上就是用户传入的或者模板编译的render
     const { render, _parentVnode } = vm.$options
 
     if (_parentVnode) {
@@ -76,6 +77,7 @@ export function renderMixin (Vue: Class<Component>) {
     // render self
     let vnode
     try {
+      // vm._renderProxy在init.js中定义，就是 vm 本身
       vnode = render.call(vm._renderProxy, vm.$createElement)
     } catch (e) {
       handleError(e, vm, `render`)
